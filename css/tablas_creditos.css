@@ -1,0 +1,402 @@
+/* Estilos para tablas de créditos y solicitudes */
+.tabla-creditos {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin: 20px 0;
+    border: 1px solid #e9ecef;
+}
+
+.tabla-creditos table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.tabla-creditos thead {
+    background: linear-gradient(135deg, #47478D 0%, #5a5a9e 100%);
+}
+
+.tabla-creditos thead th {
+    color: white;
+    font-weight: 600;
+    padding: 16px 12px;
+    text-align: left;
+    border: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tabla-creditos tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.tabla-creditos tbody tr:hover {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(71, 71, 141, 0.1);
+}
+
+.tabla-creditos tbody td {
+    padding: 16px 12px;
+    border: none;
+    font-size: 14px;
+    color: #495057;
+    vertical-align: middle;
+}
+
+.tabla-creditos tbody tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+/* Estilos para botones de acción */
+.tabla-creditos .btn-accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    margin: 0 6px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tabla-creditos .btn-accion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.tabla-creditos .btn-accion:hover::before {
+    left: 100%;
+}
+
+.tabla-creditos .btn-accion:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tabla-creditos .btn-accion i {
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+}
+
+.tabla-creditos .btn-ver {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.tabla-creditos .btn-editar {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb84d 100%);
+    color: white;
+}
+
+.tabla-creditos .btn-eliminar {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+    color: white;
+}
+
+/* Efecto de pulso para botones importantes */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+.tabla-creditos .btn-eliminar:hover {
+    animation: pulse 1s infinite;
+}
+
+/* Efecto de brillo para botones de aprobación */
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+    100% {
+        background-position: 200px;
+    }
+}
+
+.tabla-creditos .btn-aprobar {
+    background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+    background-size: 200px 100%;
+    color: white;
+}
+
+.tabla-creditos .btn-aprobar:hover {
+    background: linear-gradient(135deg, #17a2b8 0%, #20c997 50%, #17a2b8 100%);
+    background-size: 200px 100%;
+    animation: shine 1s ease-in-out;
+}
+
+.tabla-creditos .btn-pagar {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+/* Tooltip personalizado para botones */
+.tabla-creditos .btn-accion {
+    position: relative;
+}
+
+.tabla-creditos .btn-accion::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.tabla-creditos .btn-accion::after {
+    content: '';
+}
+
+.tabla-creditos .btn-accion:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Estilos para estados */
+.estado-activo {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.estado-pendiente {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb84d 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.estado-pagado {
+    background: linear-gradient(135deg, #6f42c1 0%, #8e44ad 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Estilos para valores monetarios */
+.valor-monetario {
+    font-weight: 600;
+    color: #28a745;
+    font-family: 'Courier New', monospace;
+}
+
+.valor-negativo {
+    color: #dc3545;
+}
+
+/* Estilos para fechas */
+.fecha {
+    color: #6c757d;
+    font-size: 13px;
+}
+
+/* Estilos para nombres */
+.nombre-cliente {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Estilos para el contenedor de la tabla */
+.contenedor-tabla {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
+}
+
+/* Estilos para el mensaje de no hay datos */
+.sin-datos {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    font-size: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.sin-datos i {
+    font-size: 48px;
+    color: #dee2e6;
+    margin-bottom: 16px;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tabla-creditos {
+        font-size: 12px;
+    }
+    
+    .tabla-creditos thead th,
+    .tabla-creditos tbody td {
+        padding: 12px 8px;
+    }
+    
+    .tabla-creditos .btn-accion {
+        width: 36px;
+        height: 36px;
+        margin: 0 3px;
+        font-size: 14px;
+    }
+    
+    .tabla-creditos .btn-accion:hover {
+        transform: translateY(-2px) scale(1.03);
+    }
+}
+
+@media (max-width: 576px) {
+    .tabla-creditos .btn-accion {
+        width: 32px;
+        height: 32px;
+        margin: 0 2px;
+        font-size: 12px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tabla-creditos tbody tr {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Estilos para filtros */
+.filtros-container {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.filtros-container .form-control {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+}
+
+.filtros-container .form-control:focus {
+    border-color: #47478D;
+    box-shadow: 0 0 0 0.2rem rgba(71, 71, 141, 0.25);
+}
+
+/* Estilos para los totales */
+.totales-container {
+    background: linear-gradient(135deg, #47478D 0%, #5a5a9e 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totales-container .total-item {
+    text-align: center;
+}
+
+.totales-container .total-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.totales-container .total-valor {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Estilos para botones de acción principales */
+.action-buttons .btn {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.action-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el header de la página */
+.page-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.page-header .row {
+    position: relative;
+    z-index: 1;
+} 

@@ -1,0 +1,48 @@
+table{
+	text-transform: uppercase;
+
+}
+
+table thead{
+	
+}
+
+.nav-tabs li{
+	font-size: medium;
+}
+
+#div_principal_form{
+    height: 100vh;
+}
+
+#nombre_formulario{
+    background: linear-gradient(#7bc7eb,#00147a);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.iconos_tab{
+        width: 35px;
+        height: 35px;
+ }
+
+.iconos_menu_session{
+	width: 18px;
+	margin-right: 5px;
+}
+
+.btn_opcion_menu{
+    font-weight: bold !important;
+}
+
+.li_acciones{
+	list-style: none;
+}
+
+@media only screen and (max-width: 800px) {
+   #span_nombre_usuario{
+font-size: 0px;
+	}
+}
+
+

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Tafi</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Custom Google font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <style>
+            /* Paleta de colores basada en #030D80 */
+            :root {
+                --primary: #030D80;
+                --primary-light: #0A1BA3;
+                --primary-dark: #020A5C;
+                --accent: #4A90E2;
+                --accent-light: #6BA5E8;
+                --accent-dark: #2A75D6;
+                --text-light: #FFFFFF;
+                --text-dark: #333333;
+                --bg-light: #F5F7FA;
+                --bg-dark: #1A1A2E;
+            }
+            body {
+                background-color: var(--bg-light);
+                color: var(--text-dark);
+            }
+            .navbar {
+                background: var(--text-light) !important;
+                transition: background 0.3s ease;
+                height: 100px;
+            }
+            .navbar.scrolled {
+                background: rgba(255, 255, 255, 0.8) !important;
+            }
+            .navbar .nav-link, .navbar .navbar-brand {
+                color: var(--primary) !important;
+                transition: color 0.2s;
+            }
+            .navbar .nav-link.active, .navbar .nav-link:focus, .navbar .nav-link:hover {
+                color: var(--accent) !important;
+            }
+            .navbar .navbar-brand img {
+                filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12));
+            }
+            .header-bg {
+                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                position: relative;
+                overflow: hidden;
+            }
+            .header-bg::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('img/torneo_de_los_barrios.jpg') center/cover no-repeat;
+                opacity: 0.2;
+                z-index: 0;
+            }
+            .header-content {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+            }
+            .header-white-text {
+                color: var(--text-light) !important;
+                text-shadow: 2px 2px 12px rgba(0,0,0,0.4);
+            }
+            .header-badge {
+                background: rgba(255,255,255,0.15) !important;
+                color: var(--text-light) !important;
+                border-radius: 1rem;
+                font-weight: 600;
+                letter-spacing: 2px;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            }
+            .header-btn-primary {
+                background: var(--accent) !important;
+                color: var(--text-light) !important;
+                border: none;
+                font-weight: 700;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            }
+            .header-btn-outline {
+                border: 2px solid var(--text-light) !important;
+                color: var(--text-light) !important;
+                font-weight: 700;
+            }
+            .header-btn-primary:hover {
+                background: var(--accent-dark) !important;
+            }
+            .header-btn-outline:hover {
+                background: var(--text-light) !important;
+                color: var(--primary) !important;
+            }
+            /* Animaciones para el header */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(40px);
+                animation: fadeInUp 1s ease-out forwards;
+            }
+            .fade-in.delay-1 { animation-delay: 0.2s; }
+            .fade-in.delay-2 { animation-delay: 0.4s; }
+            .fade-in.delay-3 { animation-delay: 0.6s; }
+            .fade-in.delay-4 { animation-delay: 0.8s; }
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+            /* Animaciones para las secciones */
+            section {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            }
+            section.visible {
+                opacity: 1;
+                transform: none;
+            }
+            section:nth-child(1) { animation-delay: 0.2s; }
+            section:nth-child(2) { animation-delay: 0.4s; }
+            section:nth-child(3) { animation-delay: 0.6s; }
+            section:nth-child(4) { animation-delay: 0.8s; }
+            section:nth-child(5) { animation-delay: 1s; }
+            section:nth-child(6) { animation-delay: 1.2s; }
+            section:nth-child(7) { animation-delay: 1.4s; }
+            section:nth-child(8) { animation-delay: 1.6s; }
+            section:nth-child(9) { animation-delay: 1.8s; }
+            section:nth-child(10) { animation-delay: 2s; }
+            /* Diseño innovador para la imagen del header */
+            .profile-img-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: radial-gradient(circle at 60% 40%, #00c6ff 0%, #0d6efd 80%, #003366 100%);
+                border-radius: 50%;
+                width: 340px;
+                height: 340px;
+                box-shadow: 0 8px 32px 0 rgba(13,110,253,0.25), 0 2px 8px 0 rgba(0,0,0,0.08);
+                position: relative;
+                margin: 0 auto;
+                animation: glowPulse 2.5s infinite alternate;
+            }
+            .profile-img-innovador {
+                border-radius: 50%;
+                width: 300px;
+                height: 300px;
+                object-fit: cover;
+                border: 6px solid rgba(255,255,255,0.7);
+                background: rgba(255,255,255,0.15);
+                box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                transition: transform 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.4s;
+                animation: fadeInUp 1s 0.6s ease-out forwards;
+                opacity: 0;
+            }
+            .profile-img-innovador.loaded {
+                opacity: 1;
+            }
+            .profile-img-wrapper .fallback-icon {
+                color: #fff;
+                font-size: 6rem;
+                opacity: 0.5;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            /* Estilos para la sección de llamado a la acción */
+            .bg-gradient-primary-to-secondary {
+                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            }
+            /* Estilos para el footer */
+            footer {
+                background: var(--primary) !important;
+            }
+            /* Ajuste de separación entre secciones */
+            section {
+                margin-bottom: 3rem;
+            }
+        </style>
+    </head>
+    <body class="d-flex flex-column h-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent fixed-top shadow-none" >
+                <div class="container px-5">
+                    <a class="navbar-brand" href="index.html"><span class="fw-bolder text-primary"> 
+                        <img src="img/tafi-logo.png" class="" alt="main_logo" style="width: 104px;">
+                    </span></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+                            <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#funcionalidades">Funcionalidades</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contactanos.php">Contactanos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="app/index.php">Ingresar</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Header-->
+            <header class="header-bg py-5 mb-4" style="min-height: 100vh; display: flex; align-items: center;">
+                <div class="container px-5 pb-5 header-content">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-xxl-8">
+                            <div class="text-center">
+                                <div class="badge header-badge mb-4 fade-in delay-1"><div class="text-uppercase">Gestión Total &middot; Fútbol Amateur</div></div>
+                                <h1 class="display-3 fw-bolder mb-3 header-white-text fade-in delay-2">Bienvenido a TAFI</h1>
+                                <div class="fs-4 fw-light mb-4 header-white-text fade-in delay-3">La plataforma moderna para organizar, controlar y llevar la contabilidad de tus torneos de fútbol amateur.</div>
+                                <a class="btn btn-lg px-4 me-sm-3 header-btn-primary fade-in delay-4" href="#funcionalidades">Ver Funcionalidades</a>
+                                <a class="btn btn-lg px-4 header-btn-outline fade-in delay-4" href="app/index.php">Ingresar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Funcionalidades Section -->
+            <section id="funcionalidades" class="bg-light py-5">
+                <div class="container px-5">
+                    <div class="text-center mb-5">
+                        <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">¿Qué puedes hacer con Tafi?</span></h2>
+                        <p class="lead fw-light">Todas las herramientas que necesitas para gestionar tu torneo de fútbol amateur en un solo lugar.</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-people-fill fs-1 text-primary mb-3"></i>
+                                    <h5 class="card-title">Registro de Equipos y Jugadores</h5>
+                                    <p class="card-text">Agrega y administra equipos y jugadores de manera sencilla y rápida.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-trophy-fill fs-1 text-warning mb-3"></i>
+                                    <h5 class="card-title">Gestión de Torneos</h5>
+                                    <p class="card-text">Crea, organiza y personaliza torneos, calendarios y reglas.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-cash-stack fs-1 text-success mb-3"></i>
+                                    <h5 class="card-title">Contabilidad y Finanzas</h5>
+                                    <p class="card-text">Lleva el control de pagos, inscripciones, premios y gastos del torneo.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-calendar-event fs-1 text-info mb-3"></i>
+                                    <h5 class="card-title">Programación de Partidos</h5>
+                                    <p class="card-text">Genera y gestiona el calendario de partidos y horarios automáticamente.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-bar-chart-line-fill fs-1 text-secondary mb-3"></i>
+                                    <h5 class="card-title">Estadísticas y Tablas</h5>
+                                    <p class="card-text">Consulta estadísticas, goleadores y tablas de posiciones en tiempo real.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-bell-fill fs-1 text-danger mb-3"></i>
+                                    <h5 class="card-title">Notificaciones y Avisos</h5>
+                                    <p class="card-text">Envía avisos y notificaciones a equipos y jugadores al instante.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Cómo funciona Section -->
+            <section id="como-funciona" class="py-5">
+                <div class="container px-5">
+                    <div class="text-center mb-5">
+                        <h2 class="display-6 fw-bolder">¿Cómo funciona Tafi?</h2>
+                        <p class="lead fw-light">Gestiona tu torneo en 5 pasos simples.</p>
+                    </div>
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-md-2 text-center">
+                            <i class="bi bi-person-plus-fill fs-2 text-primary mb-2"></i>
+                            <h6>1. Regístrate</h6>
+                            <p class="small">Crea tu cuenta como organizador.</p>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <i class="bi bi-trophy fs-2 text-warning mb-2"></i>
+                            <h6>2. Crea tu torneo</h6>
+                            <p class="small">Define reglas, equipos y calendario.</p>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <i class="bi bi-calendar2-check-fill fs-2 text-info mb-2"></i>
+                            <h6>3. Programa partidos</h6>
+                            <p class="small">Automatiza fechas y horarios.</p>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <i class="bi bi-cash-coin fs-2 text-success mb-2"></i>
+                            <h6>4. Lleva la contabilidad</h6>
+                            <p class="small">Controla pagos, premios y gastos.</p>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <i class="bi bi-bar-chart-fill fs-2 text-secondary mb-2"></i>
+                            <h6>5. Consulta resultados</h6>
+                            <p class="small">Sigue estadísticas y posiciones en tiempo real.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Apartados de la App Section -->
+            <section id="apartados" class="bg-light py-5">
+                <div class="container px-5">
+                    <div class="text-center mb-5">
+                        <h2 class="display-6 fw-bolder">Apartados de la App</h2>
+                        <p class="lead fw-light">Explora los módulos principales de Tafi.</p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="card h-100 border-0 shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-speedometer2 fs-1 text-primary mb-3"></i>
+                                    <h6>Panel de Control</h6>
+                                    <p class="small">Vista general de tu torneo y accesos rápidos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 border-0 shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-people fs-1 text-info mb-3"></i>
+                                    <h6>Equipos y Jugadores</h6>
+                                    <p class="small">Gestión completa de participantes.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 border-0 shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-calendar2-week fs-1 text-warning mb-3"></i>
+                                    <h6>Partidos y Resultados</h6>
+                                    <p class="small">Programación y registro de resultados.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 border-0 shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-cash-stack fs-1 text-success mb-3"></i>
+                                    <h6>Finanzas</h6>
+                                    <p class="small">Control de ingresos y egresos del torneo.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 border-0 shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-bar-chart-line fs-1 text-secondary mb-3"></i>
+                                    <h6>Estadísticas</h6>
+                                    <p class="small">Datos y rankings en tiempo real.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 border-0 shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-bell fs-1 text-danger mb-3"></i>
+                                    <h6>Notificaciones</h6>
+                                    <p class="small">Avisos y recordatorios automáticos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Testimonios Section -->
+            <section id="testimonios" class="py-5">
+                <div class="container px-5">
+                    <div class="text-center mb-5">
+                        <h2 class="display-6 fw-bolder">Testimonios</h2>
+                        <p class="lead fw-light">Lo que dicen nuestros usuarios</p>
+                    </div>
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="mb-3">"Tafi me permitió organizar mi liga local sin complicaciones. ¡La contabilidad automática es genial!"</p>
+                                    <div class="d-flex align-items-center">
+                                        <img src="img/user1.png" alt="Usuario 1" class="rounded-circle me-3" width="48" height="48">
+                                        <div>
+                                            <div class="fw-bold">Carlos M.</div>
+                                            <div class="text-muted small">Organizador de Liga</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="mb-3">"Ahora los equipos pueden ver resultados y estadísticas en tiempo real. ¡Muy recomendable!"</p>
+                                    <div class="d-flex align-items-center">
+                                        <img src="img/user2.png" alt="Usuario 2" class="rounded-circle me-3" width="48" height="48">
+                                        <div>
+                                            <div class="fw-bold">Lucía G.</div>
+                                            <div class="text-muted small">Capitana de equipo</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Llamado a la acción Section -->
+            <section class="bg-gradient-primary-to-secondary py-5">
+                <div class="container px-5 text-center">
+                    <h2 class="display-6 fw-bolder text-white mb-4">¿Listo para llevar tu torneo al siguiente nivel?</h2>
+                    <a class="btn btn-light btn-lg px-5" href="app/index.php">Comienza ahora</a>
+                </div>
+            </section>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-dark text-white py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0">Copyright © 2023 TAFI</div></div>
+                    <div class="col-auto">
+                        <a class="small text-white-50" href="#">Privacy</a>
+                        <span class="mx-1">&middot;</span>
+                        <a class="small text-white-50" href="#">Terms</a>
+                        <span class="mx-1">&middot;</span>
+                        <a class="small text-white-50" href="#">Contact</a>
+                        <span class="mx-1">&middot;</span>
+                        <a class="small text-white-50" href="#"><i class="bi bi-facebook"></i></a>
+                        <a class="small text-white-50 ms-2" href="#"><i class="bi bi-twitter"></i></a>
+                        <a class="small text-white-50 ms-2" href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script>
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section');
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
+                    if (isVisible) {
+                        section.classList.add('visible');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

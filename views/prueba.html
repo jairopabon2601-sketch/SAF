@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificado de Paz y Salvo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: #f4f4f9;
+    }
+
+    .documento {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      border: 1px solid #dcdcdc;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 60px;
+      position: relative;
+    }
+
+    .marca-agua {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  opacity: 0.08;
+  font-size: 100px;
+  font-weight: bold;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+    .encabezado {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .encabezado img {
+      max-width: 120px;
+      margin-bottom: 10px;
+    }
+
+    .encabezado h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 0;
+      text-transform: uppercase;
+      border-bottom: 2px solid #004080;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .contenido {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #444;
+      text-align: justify;
+      margin-top: 30px;
+    }
+
+    .contenido strong {
+      color: #000;
+    }
+
+    .fecha {
+      margin-top: 40px;
+      text-align: right;
+      font-style: italic;
+      color: #555;
+    }
+
+    .firmas {
+      margin-top: 80px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .firma {
+      width: 45%;
+      text-align: center;
+    }
+
+    .linea-firma {
+      border-top: 2px solid #000;
+      margin-top: 60px;
+      padding-top: 5px;
+      font-weight: bold;
+    }
+
+    /* Estilos para impresión */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+
+      .documento {
+        box-shadow: none;
+        border: none;
+        padding: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="documento">
+    <div class="marca-agua">PAZ Y SALVO</div>
+
+    <div class="encabezado">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" alt="Logo Empresa">
+      <h1>Certificado de Paz y Salvo</h1>
+    </div>
+
+    <div class="contenido">
+      <p>
+        La presente certifica que el(la) señor(a) <strong>Juan Pérez Gómez</strong>,
+        identificado(a) con cédula de ciudadanía No. <strong>1.234.567.890</strong>,
+        se encuentra a <strong>PAZ Y SALVO</strong> por todo concepto con la empresa <strong>Ejemplo S.A.S</strong>,
+        hasta la fecha <strong>02 de octubre de 2025</strong>.
+      </p>
+
+      <p>
+        Este certificado se expide a solicitud del interesado para los fines legales que considere pertinentes.
+      </p>
+    </div>
+
+    <div class="fecha">
+      Bogotá D.C., 02 de octubre de 2025
+    </div>
+
+    <div class="firmas">
+      <div class="firma">
+        <div class="linea-firma">Firma Autorizada</div>
+        <div>Ejemplo S.A.S</div>
+      </div>
+
+      <div class="firma">
+        <div class="linea-firma">Sello de la Empresa</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

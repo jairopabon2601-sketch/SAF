@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>SAF</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link  rel="icon"   href="https://www.safenlinea.com/img/icons/saf_isotipo.png" type="image/png" />
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="css/sb-admin-2-0.css" rel="stylesheet">
+</head>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+<script src="js/contratacion.js"></script>
+<script src="js/saf.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="js/jquery.growl.js" type="text/javascript"></script>
+<link href="css/jquery.growl.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    var codigo_formulario=0;
+    $(document).ready(function(){
+    
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $("#btn_enviar").on("click",function(){
+        result = validar_formulario("1","form_solicitud_credito");      
+        console.log(result);
+            if(result){
+                result_mail = validar_email($("#email").val());
+                if(result_mail){
+                    datos=$("#form_solicitud_credito").serialize();
+                    $.ajax({
+                        url: "ajax/registro_solicitud_credito.php",
+                        type: "POST",
+                        data: datos,
+                        success: function(data){
+                            console.log(data);
+                            $.growl.notice({ title: "", message: data });
+                            $("#form_solicitud_credito")[0].reset();
+                        }
+                    });
+                }   
+            }
+        });
+
+        $("#btn_consultar").on("click",function(){
+        if($("#documento").val()!=""){
+            documento = $("#documento").val();
+            $("#div_datos").show();
+            $("#form_solicitud_credito")[0].reset();
+            llenar_formulario("form_solicitud_credito","tbl_deudores","num_documento="+documento);
+            $("#documento").val(documento);
+        }   
+        });
+
+        $("#documento").on("keyup",function(){
+        //if($("#documento").val()==""){
+            //$("#form_solicitud_credito")[0].reset();
+            $("#div_datos").hide();
+        //}   
+        });
+
+    
+
+        $("#rango_meses").on("input",function(){
+			$("#meses").html($(this).val());
+			cargar_total();
+		});
+
+		$("#rango_monto").on("input",function(){
+			$("#monto").html(formatNumber($(this).val()));
+			$("#rango_monto_valor").val($(this).val());
+			cargar_total();
+		});
+
+        $("#btn_solicitud").on("click",function(){
+            $("#documento").focus();
+            $("#form_solicitud_credito")[0].reset();
+        }); 
+
+        cargar_anio("num_cuotas",1,12);
+    });
+
+  function cargar_total(){
+		valor_solicitado=parseInt($("#rango_monto_valor").val());
+		meses=parseInt($("#meses").html());
+		total_pagar=eval(((valor_solicitado*meses)*20)/100);
+        valor_pago=total_pagar;
+		total_pagar=total_pagar+valor_solicitado;
+		valor_mes=Math.round(eval(total_pagar/meses));
+		valor_quincena=Math.round(eval(valor_mes/2));
+        valor_intereses = eval((valor_pago*2.21)/100);
+        fianza = eval((valor_pago*17)/100);
+        console.log(fianza);
+        administracion = eval((valor_pago*20.39)/100);
+        iva = eval((valor_pago*19)/100);
+        seguro = eval((valor_pago*41.4)/100);
+        $("#valor_seguro").text("$"+formatNumber(seguro));
+        $("#valor_iva").text("$"+formatNumber(iva));
+        $("#valor_administracion").text("$"+formatNumber(administracion));
+        $("#valor_fianza").text("$"+formatNumber(fianza));
+		$("#valor_interes").text("$"+formatNumber(valor_intereses));
+		$("#valor_mensual").text("$"+formatNumber(valor_mes));
+		$("#valor_quincenal").text("$"+formatNumber(valor_quincena));
+		$("#valor_total").text("$"+formatNumber(parseInt(total_pagar)));
+		$("#valor_solicitado").text("$"+formatNumber(parseInt($("#rango_monto_valor").val())));
+		$("#lbl_mensual").text(meses+ " Cuota(s) Mensual(es)");
+		$("#lbl_quincenal").text(eval(meses*2)+ " Cuota(s) Quincenal(es)");
+	}
+
+
+
+</script>
+
+<body class="body-style-bg">
+    <div class="main-container">
+        <div class="container-nav" >
+            <div class="container-logo">
+                <a href="https://safenlinea.com">
+                    <img src="img/saf_logo.png">
+                </a>
+            </div>
+            
+            <div class="container-login">
+                <a href="login.html">
+                    <button class="login-btn ">
+                        <i class="fas fa-eraser"></i> Iniciar Sesión
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class="container-hero">
+
+            <div class="gradient1">
+                <svg xmlns="http://www.w3.org/2000/svg" height="605" viewBox="0 0 740 605" fill="none">
+                    <g opacity="0.3" filter="url(#filter0_f_4_8)">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M586.228 183.996C569.876 234.653 532.448 273.406 498.548 314.717C469.341 350.309 438.215 382.038 401.129 409.563C359.819 440.223 320.861 482.892 269.223 484.921C217.417 486.957 173.911 449.065 131.112 420.173C90.8724 393.009 62.2203 355.579 27.5328 321.764C-19.9422 275.484 -101.874 249.225 -111.161 183.996C-120.139 120.938 -54.9682 71.9949 -15.1609 21.8923C20.1193 -22.5123 59.499 -61.8424 107.952 -91.7858C157.706 -122.533 211.149 -162.278 269.223 -153.854C327.201 -145.443 351.854 -72.4441 405.272 -48.6567C467.549 -20.9249 560.366 -59.1756 601.975 -5.67883C641.787 45.507 606.077 122.507 586.228 183.996Z" fill="#668CFF"/>
+                    </g>
+                    <defs>
+                      <filter id="filter0_f_4_8" x="-232" y="-275" width="972" height="880" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur_4_8"/>
+                      </filter>
+                    </defs>
+                  </svg>
+            </div>
+
+            <div class="container-text-hero">
+                <div class="inner-content">
+                    <div class="">
+                        <h1 class="tittle-hero-diferent">Plataforma de creación y gestión de préstamos</h1>
+                        <div class="sub-tittle-hero">SAF es una sociedad con créditos muy rápidos.</div>
+                        <div class="list-group">
+                            <ul class="list-options">
+                                <li>Cada desembolso y cada pago a tiempo que
+                                    hagas
+                                    va a <b>mejorar tu perfil crediticio.</b></li>
+                                <li><b>A medida que nos conozcamos</b> tu cupo
+                                    aprobado<br>
+                                    puede subir y tus costos bajar.</li>
+                                <li>En el camino vamos a <b>enseñarte cómo
+                                    tener más<br>
+                                    dinero</b> y acceder a créditos más grandes</li><br>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="query-container">
+                <div class="card" style="background-color:rgba(255, 255, 255, 0.3);">
+                    <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row" style="max-width: 100%;">                    
+                        <div class="col-lg-12 text-center">
+                        <div class="p-3" style="margin-right: -3%;">
+                            <div class="text-center">
+                            <h1 class="h4 mb-4">Solicita tu Crédito</h1>
+                            </div>
+                            <form class="user" id="form_solicitud_credito" name="form_solicitud_credito">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" name="documento" id="documento" onkeypress="return solo_numeros(event)" lang="1" placeholder="Doc.identidad">
+                                        </div>
+                                        <div class="form-group col-md-6">                                            
+                                            <button type="button" id="btn_consultar" class="btn-principal" >Consultar</button>
+                                        </div>
+                                    </div>
+                                    <div id="div_datos" style="display:none;">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" name="nombres" id="nombres" onkeypress="return solo_texto(event)" lang="1" placeholder="Nombres">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" name="apellidos" id="apellidos" onkeypress="return solo_texto(event)" lang="1" placeholder="Apellidos">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" name="telefono" id="telefono" onkeypress="return solo_numeros(event)" lang="1" placeholder="Teléfono">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="email" aria-placeholder="emailHelp" class="form-control" name="email" lang="1" id="email" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" placeholder="Valor $" class="form-control" name="valor_prestamo" onkeypress="return solo_numeros(event)" lang="1" id="valor_prestamo">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" name="direccion" lang="1" id="direccion" placeholder="Dirección">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="tiempo_cuota">Tiempo de cuota</label>
+                                                <select class="form-control" name="tiempo_cuota" id="tiempo_cuota">
+                                                    <option value="0">Seleccione</option>
+                                                    <option value="1">Mensual</option>
+                                                    <option value="2">Quincenal</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="num_cuotas">Cuotas</label>
+                                                <select id="num_cuotas" name="num_cuotas" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <p>
+                                            <button type="button" id="btn_enviar" class="btn-principal" style="margin-top: 5%;margin-left: 0%;">Enviar Solicitud</button>
+                                        </p>
+                                    </div>
+                                </form>
+                        </div>
+                
+                    </div>
+                    </div>
+                </div>
+        
+                </div>
+            
+            </div>   
+        </div>
+
+        <div class="credit-calculator">
+            <div class="gradient2">
+                <svg xmlns="http://www.w3.org/2000/svg" height="794" viewBox="0 0 607 794" fill="none">
+                    <g opacity="0.3" filter="url(#filter0_f_4_55)">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M459.687 413.444C446.462 457.294 416.193 490.839 388.777 526.598C365.156 557.408 339.983 584.874 309.989 608.7C276.581 635.24 245.074 672.175 203.311 673.932C161.414 675.694 126.228 642.894 91.6153 617.885C59.0717 594.37 35.8994 561.97 7.84618 532.699C-30.5489 492.638 -96.811 469.908 -104.322 413.444C-111.582 358.859 -58.8759 316.492 -26.6821 273.122C1.85052 234.685 33.6987 200.64 72.8846 174.72C113.123 148.104 156.345 113.7 203.311 120.992C250.201 128.273 270.138 191.462 313.341 212.053C363.706 236.059 438.771 202.948 472.422 249.256C504.62 293.564 475.74 360.217 459.687 413.444Z" fill="#7B43B3"/>
+                    </g>
+                    <defs>
+                      <filter id="filter0_f_4_55" x="-225" y="0" width="832" height="794" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur_4_55"/>
+                      </filter>
+                    </defs>
+                  </svg>
+            </div>
+
+            <div class="content-calculator">
+                <div id="div_calculo">
+                    <div id="div_simulador" >
+                        <h4 class="text-credit">Calcula tu Crédito</h4>
+                        <div class="container-credit">
+                                <p>
+                                    <div class="slidecontainer">
+                                        
+                                        <p>Tiempo en Meses: <span id="meses"></span></p>
+                                        <input type="range" min="1" max="24" value="1"  class="slider" id="rango_meses">
+                                        
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="slidecontainer">
+                                        
+                                        <p>Monto solicitado: <span id="monto"></span></p>
+                                        <input type="hidden" value="">
+                                        <input type="range" min="100000" max="3000000" value="10000" step="50000" class="slider" id="rango_monto">
+                                        <input type="hidden" id="rango_monto_valor" value="">
+                                        
+                                    </div>
+                                </p>
+                                <p>
+                                    <button type="button" id="btn_solicitud" class="btn-principal">Solicita tu crédito ya</button>
+                                </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_valores">
+                    <div id="div_simulador">
+                            <h4 class="text-credit">Estos son los valores a pagar</h4>
+
+                            <div class="container-credit">
+                                <div class="row text-center" style="color: white;">
+                                    <div class="col alert">Valor solicitado</div>
+                                    <div class="col alert">
+                                        <span id="valor_solicitado">$0</span>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col alert">Interés (E.A)</div>
+                                    <div class="col alert">
+                                        <span id="valor_interes">$0</span>
+                                        <i data-toggle="tooltip" title="De acuerdo con el cambio de metodología implementada para el efecto, las autoridades nacionales certifican la tasa máxima que puede ser cobrada por las obligaciones crediticias mensuales. Para el mes actual te informamos que la tasa de usura es de 35,25% E.A. (efectivo anual). Recuerda que en SAF cobramos un interés corriente de 30,00% E.A. y un interés moratorio, el cual será el máximo permitido establecido por la Superintendencia Financiera de Colombia para la fecha de entrar en mora." class="bi bi-info-circle"></i>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col alert">Seguro</div>
+                                    <div class="col alert">
+                                        <span id="valor_seguro">$0</span>
+                                        <i data-toggle="tooltip" title="Póliza de aseguramiento sobre el valor del crédito en caso de muerte o incapacidad total del titular. Si cuentas con un seguro que cubra este tipo de obligaciones puedes utilizarlo con nosotros." class="bi bi-info-circle"></i>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col alert">Fianza GES + IVA</div>
+                                    <div class="col alert">
+                                        <span id="valor_fianza">$0</span>
+                                        <i data-toggle="tooltip" title="El Grupo empresarial SAF (GES) avala y respalda tu cupo de crédito si es aprobado. Este valor varía dependiendo del monto que pidas. Puede ser de hasta el 17% de tu cupo. Incluye IVA." class="bi bi-info-circle"></i>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col alert">Administración</div>
+                                    <div class="col alert">
+                                        <span id="valor_administracion">$0</span>
+                                        <i data-toggle="tooltip" title="Cargo que garantiza la disponibilidad de tu cupo de crédito. Se paga cada 30 días mientras tengas 1 o más desembolsos activos." class="bi bi-info-circle"></i>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col alert">IVA</div>
+                                    <div class="col alert">
+                                        <span id="valor_iva">$0</span>
+                                        <i data-toggle="tooltip" title="El IVA es un costo que por ley debes pagar. Este aplica sobre el cargo de administración." class="bi bi-info-circle"></i>
+                                    </div>                               
+                                </div>
+                            </div>
+                            
+                            <div class="container-credit">
+                                <div class="row text-center" >
+                                    <div class="col alert" id="lbl_mensual">Cuota Mensual</div>
+                                    <div class="col alert" id="valor_mensual">$0</div>
+                                    <div class="w-100"></div>  
+                                    <div class="col alert" id="lbl_quincenal">Cuota Quincenal</div>
+                                    <div class="col alert" id="valor_quincenal">$0</div>
+                                    <div class="w-100"></div>                                                       
+                                    <div class="col total">Total a Pagar</div>
+                                    <div class="col total" id="valor_total">$0</div>
+                                    <div class="w-100"></div>  
+                                </div>
+                            </div>                       
+                    </div>
+                </div>  
+            </div> 
+
+            <div class="gradient3">
+                <svg xmlns="http://www.w3.org/2000/svg" height="880" viewBox="0 0 609 880" fill="none">
+                    <g opacity="0.3" filter="url(#filter0_f_4_14)">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M818.228 458.996C801.876 509.653 764.448 548.406 730.548 589.717C701.341 625.309 670.215 657.038 633.129 684.563C591.819 715.223 552.861 757.892 501.223 759.921C449.417 761.957 405.911 724.065 363.112 695.173C322.872 668.009 294.22 630.579 259.533 596.764C212.058 550.484 130.126 524.225 120.839 458.996C111.861 395.938 177.032 346.995 216.839 296.892C252.119 252.488 291.499 213.158 339.952 183.214C389.706 152.467 443.149 112.722 501.223 121.146C559.201 129.557 583.854 202.556 637.272 226.343C699.549 254.075 792.366 215.824 833.975 269.321C873.787 320.507 838.077 397.507 818.228 458.996Z" fill="#668CFF"/>
+                    </g>
+                    <defs>
+                      <filter id="filter0_f_4_14" x="0" y="0" width="972" height="880" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur_4_14"/>
+                      </filter>
+                    </defs>
+                  </svg>
+            </div>
+
+        </div> 
+
+        <div class="row" style="margin: auto;max-width: 70%;margin-bottom: 2%;margin-top: 4%;">
+        <p class="text-center">
+            Nuestro proceso de aplicación es <b>100% en línea</b>, fácil y toma menos de 15 minutos.
+            Puedes hacer tu solicitud de forma física, comunicándote con tu <b>asesor de confianza</b>, pero te perderás de los <b>beneficios</b> de hacer la solicitud en línea.
+        </p>
+        </div>
+    </div>
+</body>
+</html>

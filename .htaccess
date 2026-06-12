@@ -1,0 +1,18 @@
+<IfModule mod_php5.c>
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value display_errors 1
+</IfModule>
+
+<IfModule mod_php7.c>
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value display_errors 1
+</IfModule>
+
+# HTID:9763314: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:9763314:
+
+DirectoryIndex index.html
+ErrorDocument 404 /index.php
