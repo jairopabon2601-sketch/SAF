@@ -104,7 +104,7 @@
 
     	public function actualizar($tabla, $datos, $condicion){
 			
-    		if ($condicion=="" || $condicion == undefined) {
+    		if ($condicion == "" || $condicion === null || $condicion === "undefined") {
     			return "Debe agregar una condición.";   	
     		}else{ 
 
@@ -133,7 +133,7 @@
 
     	public function borrar($tabla, $condicion){ 
 
-    		if ($condicion=="" || $condicion!= undefined) {
+    		if ($condicion == "" || $condicion === null || $condicion === "undefined") {
     			return "Debe agregar una condición.";   	
     		}else{
 	        	$resultado  =   $this->conexion->query("DELETE FROM $tabla WHERE $condicion") or die($this->conexion->error);
@@ -151,7 +151,7 @@
 
 			$sql="select ".$valor.", ".$etiqueta." from ".$tabla." where ".$filtro;
 			
-			if ($campo_orden != undefined) {
+			if ($campo_orden != "" && $campo_orden !== null && $campo_orden !== "undefined") {
 				$sql.=" order by " . $campo_orden;	
 			}
 

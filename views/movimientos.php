@@ -957,7 +957,7 @@ function cargarMovimientosCuenta(codigo_cuenta, pagina) {
         data: {codigo_cuenta: codigo_cuenta, pagina: pagina},
         dataType: 'json',
         success: function(res) {
-            var html = '<table class="table table-sm table-striped">';
+            var html = '<div class="table-responsive"><table class="table table-sm table-striped table-hover w-100">';
             html += '<thead><tr><th>Fecha</th><th>Tipo</th><th>Valor</th><th>Descripción</th></tr></thead><tbody>';
             if (res.movimientos.length === 0) {
                 html += '<tr><td colspan="4" class="text-center">Sin movimientos</td></tr>';
@@ -971,7 +971,7 @@ function cargarMovimientosCuenta(codigo_cuenta, pagina) {
                     html += '</tr>';
                 });
             }
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             $('#div_tabla_movimientos_cuenta').html(html);
             // Paginación
             var pagHtml = '';

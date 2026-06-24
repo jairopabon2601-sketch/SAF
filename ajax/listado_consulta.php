@@ -40,7 +40,7 @@
 
 				$value_campos_ocultos=array();
 
-				$tabla="<div class='tabla-creditos table-responsive'><table class='table table-striped table-responsive'>";
+				$tabla="<div class='tabla-creditos table-responsive'><table class='table table-striped table-hover w-100'>";
 					$tabla.="<thead><tr>";
 						$i=0;
 						foreach ($columnas as $key => $value) {
