@@ -383,6 +383,7 @@
 .page-header {
     position: relative;
     overflow: hidden;
+    margin-bottom: 80px !important;
 }
 
 .page-header::before {
@@ -396,7 +397,9 @@
     opacity: 0.3;
 }
 
-.page-header .row {
+/* Ensure tabs have spacing */
+.nav-tabs {
+    margin-top: 50px !important;
     position: relative;
-    z-index: 1;
-} 
+    z-index: 5;
+}
