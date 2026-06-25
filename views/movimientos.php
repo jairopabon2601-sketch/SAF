@@ -976,7 +976,7 @@ session_start();
     function cargarMovimientosCuenta(codigo_cuenta, pagina) {
         $.ajax({
             url: 'ajax/listar_movimientos_cuenta.php',
-            method: 'GET',
+            method: 'POST',
             data: { codigo_cuenta: codigo_cuenta, pagina: pagina },
             dataType: 'json',
             success: function (res) {

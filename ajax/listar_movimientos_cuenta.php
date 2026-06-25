@@ -1,11 +1,11 @@
 <?php
 require_once("../conexion/conexion.php");
 $conexion = new conexion_db();
-$codigo_cuenta = intval($_REQUEST['codigo_cuenta']);
-$pagina = isset($_REQUEST['pagina']) ? max(1, intval($_REQUEST['pagina'])) : 1;
-//$usuario = $_REQUEST['usuario'];
-$desde = isset($_REQUEST['desde']) && $_REQUEST['desde'] !== '' ? $_REQUEST['desde'] : date('Y-m-d', strtotime('-1 month'));
-$hasta = isset($_REQUEST['hasta']) && $_REQUEST['hasta'] !== '' ? $_REQUEST['hasta'] : date('Y-m-d');
+$codigo_cuenta = intval($_POST['codigo_cuenta']);
+$pagina = isset($_POST['pagina']) ? max(1, intval($_POST['pagina'])) : 1;
+//$usuario = $_POST['usuario'];
+$desde = isset($_POST['desde']) && $_POST['desde'] !== '' ? $_POST['desde'] : date('Y-m-d', strtotime('-1 month'));
+$hasta = isset($_POST['hasta']) && $_POST['hasta'] !== '' ? $_POST['hasta'] : date('Y-m-d');
 $por_pagina = 50;
 $offset = ($pagina - 1) * $por_pagina;
 
