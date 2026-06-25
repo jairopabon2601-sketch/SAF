@@ -9,7 +9,7 @@ $hasta = isset($_REQUEST['hasta']) && $_REQUEST['hasta'] !== '' ? $_REQUEST['has
 $por_pagina = 50;
 $offset = ($pagina - 1) * $por_pagina;
 
-$where = "codigo_cuenta='$codigo_cuenta' AND estado!=2";
+$where = "codigo_cuenta='$codigo_cuenta' AND estado!=2 AND tipo_movimiento=2";
 if ($desde && $hasta) {
     $where .= " AND fecha BETWEEN '$desde' AND '$hasta'";
 }
@@ -20,7 +20,7 @@ $total_paginas = max(1, ceil($total / $por_pagina));
 
 $sql = "SELECT m.codigo, 
         date_format(m.fecha, '%d/%m/%Y') AS fecha,
-        if(m.tipo_movimiento=2,'Ingreso','Gasto') AS tipo_movimiento,
+        if(m.tipo_movimiento=2,'Gasto','Ingreso') AS tipo_movimiento,
         m.valor, m.descripcion
         FROM tbl_cuentas_movimientos m
         WHERE $where ORDER BY m.fecha DESC, m.codigo DESC LIMIT $offset, $por_pagina";
