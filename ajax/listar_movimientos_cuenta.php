@@ -35,6 +35,8 @@ $sql = "SELECT m.codigo, m.fecha, t.nombre AS tipo_movimiento, m.valor, m.descri
         FROM tbl_cuentas_movimientos m
         LEFT JOIN tbl_cuentas_tipo t ON m.tipo_movimiento = t.codigo
         WHERE $where ORDER BY m.fecha DESC, m.codigo DESC LIMIT $offset, $por_pagina";
+
+echo $sql;
 $res = $conexion->ejecutar_sql($sql);
 $movimientos = [];
 if ($res && $res->num_rows > 0) {
